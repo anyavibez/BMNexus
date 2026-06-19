@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BM Premium Collection</title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #0f0f1a;
+      --bg-card: #12121f;
+      --accent-blue: #00d4ff;
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-gold: #f59e0b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-color: rgba(255, 255, 255, 0.06);
+      --glow-blue: rgba(0, 212, 255, 0.3);
+      --glow-purple: rgba(124, 58, 237, 0.3);
+      --glow-pink: rgba(236, 72, 153, 0.3);
+      --glow-gold: rgba(245, 158, 11, 0.3);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .font-orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── ANIMATED SVG LOGO ─── */
+    .logo-wrap {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .logo-svg .logo-bg {
+      fill: rgba(0, 212, 255, 0.06);
+      stroke: url(#lg);
+      stroke-width: 1.2;
+      transition: fill 0.3s;
+    }
+
+    .logo-svg .logo-diamond {
+      fill: url(#lg);
+      opacity: 0.9;
+    }
+
+    .logo-svg .logo-text {
+      fill: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+    }
+
+    .logo-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      animation: ringPulse 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .logo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, rgba(0, 212, 255, 0.15), transparent, rgba(124, 58, 237, 0.15), transparent);
+      z-index: -1;
+      animation: ringSpin 4s linear infinite;
+    }
+
+    .logo-ring::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 50%;
+      background: var(--bg-primary);
+      z-index: -1;
+    }
+
+    @keyframes ringPulse {
+      0%,
+      100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+
+    @keyframes ringSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ─── PARTICLE CANVAS ─── */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: all 0.4s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 0.6rem 0;
+    }
+
+    .nav-link {
+      position: relative;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ─── HERO ─── */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+
+    .hero-orb:nth-child(1) {
+      width: 400px;
+      height: 400px;
+      background: rgba(0, 212, 255, 0.12);
+      top: -10%;
+      right: -5%;
+      animation-delay: 0s;
+    }
+
+    .hero-orb:nth-child(2) {
+      width: 350px;
+      height: 350px;
+      background: rgba(124, 58, 237, 0.1);
+      bottom: -5%;
+      left: -5%;
+      animation-delay: -3s;
+    }
+
+    .hero-orb:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      background: rgba(236, 72, 153, 0.08);
+      top: 40%;
+      left: 50%;
+      animation-delay: -5s;
+    }
+
+    @keyframes orbFloat {
+      0%,
+      100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.1); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(20px, 30px) scale(1.05); }
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title .white-text {
+      background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #f1f5f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── SECTION STYLES ─── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    }
+
+    /* ─── CARDS ─── */
+    .card-premium {
+      background: linear-gradient(145deg, rgba(18, 18, 31, 0.9), rgba(15, 15, 26, 0.95));
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-premium .card-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+      transition: left 0.8s ease;
+      pointer-events: none;
+    }
+
+    .card-premium:hover .card-shine {
+      left: 100%;
+    }
+
+    .card-premium:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ─── GLOW EFFECTS ─── */
+    .glow-blue {
+      box-shadow: 0 0 20px var(--glow-blue), 0 0 40px rgba(0, 212, 255, 0.1);
+    }
+    .glow-purple {
+      box-shadow: 0 0 20px var(--glow-purple), 0 0 40px rgba(124, 58, 237, 0.1);
+    }
+    .glow-gold {
+      box-shadow: 0 0 20px var(--glow-gold), 0 0 40px rgba(245, 158, 11, 0.1);
+    }
+
+    .text-glow-blue {
+      text-shadow: 0 0 10px var(--glow-blue), 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    .text-glow-purple {
+      text-shadow: 0 0 10px var(--glow-purple), 0 0 20px rgba(124, 58, 237, 0.1);
+    }
+    .text-glow-pink {
+      text-shadow: 0 0 10px var(--glow-pink), 0 0 20px rgba(236, 72, 153, 0.1);
+    }
+    .text-glow-gold {
+      text-shadow: 0 0 10px var(--glow-gold), 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn-premium {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.8rem 2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-premium:hover::before {
+      left: 100%;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #00d4ff, #0066ff);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+    .btn-blue:hover {
+      box-shadow: 0 0 35px rgba(0, 212, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+    }
+    .btn-purple:hover {
+      box-shadow: 0 0 35px rgba(124, 58, 237, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    }
+    .btn-gold:hover {
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-small {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.62rem;
+      border-radius: 6px;
+    }
+
+    /* ─── BADGES ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.85rem;
+      border-radius: 100px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge-blue {
+      background: rgba(0, 212, 255, 0.08);
+      color: var(--accent-blue);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+    }
+    .badge-purple {
+      background: rgba(124, 58, 237, 0.08);
+      color: var(--accent-purple);
+      border: 1px solid rgba(124, 58, 237, 0.15);
+    }
+    .badge-pink {
+      background: rgba(236, 72, 153, 0.08);
+      color: var(--accent-pink);
+      border: 1px solid rgba(236, 72, 153, 0.15);
+    }
+    .badge-gold {
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    /* ─── PRICE ─── */
+    .price-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+    }
+
+    .price-original {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .price-save {
+      font-size: 0.6rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      color: #fff;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-container {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: #000;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      pointer-events: none;
+      display: block;
+    }
+
+    .video-container:hover video {
+      transform: scale(1.05);
+    }
+
+    .video-center-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .video-container:hover .video-center-play {
+      opacity: 1;
+    }
+
+    .video-center-play-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: #fff;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .video-center-play-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: scale(1.1);
+    }
+
+    .video-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ─── YOUTUBE-LIKE CONTROLS ─── */
+    .video-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 8px 10px;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .video-container:hover .video-controls {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .video-controls-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .video-scrubber {
+      flex: 1;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      transition: height 0.15s ease;
+    }
+
+    .video-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .video-scrubber:hover {
+      height: 6px;
+    }
+
+    .video-scrubber:hover::-webkit-slider-thumb {
+      opacity: 1;
+    }
+
+    .video-scrubber::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      border: none;
+      cursor: pointer;
+    }
+
+    .video-scrubber::-moz-range-track {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      height: 4px;
+    }
+
+    .video-time {
+      font-family: 'Inter', monospace;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      min-width: 75px;
+      text-align: right;
+      letter-spacing: 0.02em;
+    }
+
+    .video-btn-control {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: color 0.2s, transform 0.2s;
+      border-radius: 4px;
+    }
+
+    .video-btn-control:hover {
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    .video-btn-control svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .video-btn-control.play-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .video-progress-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent-blue);
+      border-radius: 0 2px 0 0;
+      z-index: 4;
+      pointer-events: none;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+    }
+
+    /* ─── FEATURE LIST ─── */
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .feature-item .icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .icon-blue {
+      background: rgba(0, 212, 255, 0.12);
+      color: var(--accent-blue);
+    }
+    .icon-purple {
+      background: rgba(124, 58, 237, 0.12);
+      color: var(--accent-purple);
+    }
+    .icon-gold {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--accent-gold);
+    }
+    .icon-pink {
+      background: rgba(236, 72, 153, 0.12);
+      color: var(--accent-pink);
+    }
+
+    /* ─── COMBO CARD ─── */
+    .combo-card {
+      background: linear-gradient(145deg, rgba(18, 18, 31, 0.8), rgba(15, 15, 26, 0.9));
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .combo-card:hover {
+      border-color: rgba(255, 255, 255, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .combo-card .combo-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .combo-card:hover .combo-bar {
+      opacity: 1;
+    }
+
+    /* ─── BUNDLE ─── */
+    .bundle-card {
+      background: linear-gradient(145deg, rgba(18, 18, 31, 0.95), rgba(15, 15, 26, 0.98));
+      border: 1px solid rgba(245, 158, 11, 0.12);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bundle-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: conic-gradient(from 0deg, transparent, rgba(245, 158, 11, 0.08), transparent, rgba(245, 158, 11, 0.04), transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: borderSpin 8s linear infinite;
+    }
+
+    @keyframes borderSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .crown-icon {
+      font-size: 2.5rem;
+      animation: crownBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes crownBounce {
+      0%,
+      100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .bundle-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.55rem 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .bundle-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateX(4px);
+    }
+
+    /* ─── COUNTER ─── */
+    .counter-value {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── FADE ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    .stagger-6 { transition-delay: 0.6s; }
+
+    /* ─── SHIMMER ─── */
+    .shimmer-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shimmer-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent);
+      animation: shimmerMove 2.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmerMove {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(30px);
+      border-left: 1px solid rgba(255, 255, 255, 0.04);
+      z-index: 200;
+      padding: 5rem 2rem 2rem;
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .mobile-menu.open {
+      right: 0;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ─── TOAST ─── */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: rgba(18, 18, 31, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 0.9rem 1.3rem;
+      min-width: 270px;
+      transform: translateX(120%);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: all;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .bundle-card { padding: 1.5rem; }
+      .hero-title { font-size: clamp(2rem, 10vw, 3.5rem); }
+      .toast-container { left: 1rem; right: 1rem; bottom: 1rem; }
+      .toast { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Canvas -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- SVG Gradients -->
+  <svg style="position:absolute;width:0;height:0;" aria-hidden="true">
+    <defs>
+      <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4ff"/>
+        <stop offset="50%" stop-color="#7c3aed"/>
+        <stop offset="100%" stop-color="#ec4899"/>
+        <animate attributeName="x1" values="0%;100%;0%" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="x2" values="100%;0%;100%" dur="4s" repeatCount="indefinite"/>
+      </linearGradient>
+      <linearGradient id="lgStatic" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4ff"/>
+        <stop offset="100%" stop-color="#7c3aed"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="flex flex-col gap-6">
+      <div class="flex justify-end">
+        <button id="closeMenu" class="text-gray-500 hover:text-white transition-colors text-2xl leading-none">&times;</button>
+      </div>
+      <a href="#rooms" class="nav-link text-sm" onclick="closeMobileMenu()">Rooms</a>
+      <a href="#products" class="nav-link text-sm" onclick="closeMobileMenu()">Products</a>
+      <a href="#combos" class="nav-link text-sm" onclick="closeMobileMenu()">Combos</a>
+      <a href="#bundle" class="nav-link text-sm" onclick="closeMobileMenu()">Bundle</a>
+    </div>
+  </div>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="logo-wrap">
+            <div class="logo-ring"></div>
+            <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+              <rect class="logo-bg" x="1" y="1" width="38" height="38" rx="10" stroke="url(#lgStatic)" stroke-width="1.2"/>
+              <path class="logo-diamond" d="M20 8L32 20L20 32L8 20L20 8Z"/>
+              <text class="logo-text" x="20" y="22.5" text-anchor="middle">BM</text>
+            </svg>
+          </div>
+          <span class="font-orbitron font-bold text-sm tracking-widest text-white">
+            PREMIUM<span class="text-blue-400">.</span>
+          </span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#rooms" class="nav-link">Rooms</a>
+          <a href="#products" class="nav-link">Products</a>
+          <a href="#combos" class="nav-link">Combos</a>
+          <a href="#bundle" class="nav-link">Bundle</a>
+        </div>
+
+        <button id="menuToggle" class="md:hidden text-gray-400 hover:text-white transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
+      <div class="fade-up visible">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-[0.6rem] text-gray-400 tracking-widest uppercase mb-10">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+          Premium Collection 2026
+        </div>
+      </div>
+
+      <h1 class="hero-title mb-6">
+        <span class="white-text">BM</span><br>
+        <span class="gradient-text">Premium</span><br>
+        <span class="white-text">Collection</span>
+      </h1>
+
+      <p class="text-gray-500 text-lg max-w-2xl mx-auto fade-up visible stagger-2">
+        Curated premium rooms, products, and bundles &mdash; designed for the extraordinary.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 fade-up visible stagger-3">
+        <a href="#rooms" class="btn-premium btn-blue">
+          Explore Rooms
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </a>
+        <a href="#bundle" class="btn-premium btn-outline">View Bundle</a>
+      </div>
+
+      <div class="mt-16 grid grid-cols-3 gap-6 max-w-md mx-auto fade-up visible stagger-4">
+        <div class="text-center">
+          <div class="counter-value text-3xl" data-target="4">0</div>
+          <div class="text-[0.6rem] text-gray-600 mt-1.5 tracking-widest uppercase">Rooms</div>
+        </div>
+        <div class="text-center">
+          <div class="counter-value text-3xl" data-target="3">0</div>
+          <div class="text-[0.6rem] text-gray-600 mt-1.5 tracking-widest uppercase">Products</div>
+        </div>
+        <div class="text-center">
+          <div class="counter-value text-3xl" data-target="11">0</div>
+          <div class="text-[0.6rem] text-gray-600 mt-1.5 tracking-widest uppercase">Deals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ROOMS ========== -->
+  <section id="rooms" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="section-label text-blue-400/70 mb-4 fade-up">Premium Selection</p>
+        <h2 class="section-title text-3xl md:text-5xl fade-up stagger-1">
+          <span class="text-glow-blue text-blue-400">Luxury</span> Rooms
+        </h2>
+        <div class="divider-line max-w-xs mx-auto mt-6 fade-up stagger-2"></div>
+      </div>
+
+      <!-- Room 1: XTROMKL -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16 items-center fade-left">
+        <div class="card-premium rounded-2xl overflow-hidden">
+          <div class="card-shine"></div>
+          <div class="video-container" data-playing="false">
+            <video loop muted playsinline preload="metadata">
+              <source src="videos/xtromkl.mp4" type="video/mp4">
+            </video>
+            <div class="video-gradient"></div>
+            <div class="video-center-play">
+              <button class="video-center-play-btn" onclick="toggleVideo(this)">
+                <svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="video-progress-fill" style="width:0%"></div>
+            <div class="video-controls">
+              <div class="video-controls-top">
+                <button class="video-btn-control play-btn" onclick="toggleVideo(this)" title="Play/Pause">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <button class="video-btn-control" onclick="skipVideo(this, -10)" title="Back 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                  </svg>
+                </button>
+                <input type="range" class="video-scrubber" min="0" max="100" value="0" oninput="seekVideo(this)">
+                <button class="video-btn-control" onclick="skipVideo(this, 10)" title="Forward 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                  </svg>
+                </button>
+                <span class="video-time">0:00 / 0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-5 fade-right stagger-1">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="badge badge-blue">XTROMKL Room</span>
+            <span class="text-[0.6rem] text-gray-600 tracking-widest uppercase">&#9733; Premium</span>
+          </div>
+          <h3 class="font-orbitron text-2xl md:text-3xl font-bold">
+            <span class="text-glow-blue text-blue-400">XTROMKL</span>
+            <span class="text-gray-200"> Room</span>
+          </h3>
+          <p class="text-gray-400">Intense blue neon theme with premium room design. Sofa included.</p>
+          <div class="space-y-1.5">
+            <div class="feature-item"><div class="icon icon-blue">&#10003;</div>Intense Blue Neon Theme</div>
+            <div class="feature-item"><div class="icon icon-blue">&#10003;</div>Premium Room Design</div>
+            <div class="feature-item"><div class="icon icon-blue">&#10003;</div>Sofa Included</div>
+          </div>
+          <div class="flex items-center gap-5 pt-2">
+            <div>
+              <span class="price-tag text-3xl text-white">₹1,500</span>
+              <span class="text-sm text-gray-600 ml-2">$20</span>
+            </div>
+            <button class="btn-premium btn-blue btn-small" onclick="notify('XTROMKL Room','Selected &mdash; Premium Blue Neon Room')">
+              Select Room
+            </button>
+          </div>
+          <div class="flex items-center gap-2 pt-1">
+            <span class="text-[0.65rem] text-gray-600">Also:</span>
+            <button class="text-[0.65rem] text-blue-400/70 hover:text-blue-300 transition-colors underline underline-offset-2" onclick="notify('Sofa Only','₹1,000 ($14) &mdash; Sofa add-on selected')">Sofa Only &mdash; ₹1,000 ($14)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 2: AIN Belt -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16 items-center fade-right">
+        <div class="order-2 md:order-1 space-y-5 fade-left stagger-1">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="badge badge-purple">AIN Belt Room</span>
+            <span class="text-[0.6rem] text-gray-600 tracking-widest uppercase">&#9888; Warning</span>
+          </div>
+          <h3 class="font-orbitron text-2xl md:text-3xl font-bold">
+            <span class="text-glow-purple text-purple-400">AIN Belt</span>
+            <span class="text-gray-200"> Room</span>
+          </h3>
+          <p class="text-gray-400">Intense apartment-style setup with dynamic poses. <span class="text-yellow-400/80 text-sm">&#9888; Takes ~30 seconds to load poses</span></p>
+          <div class="space-y-1.5">
+            <div class="feature-item"><div class="icon icon-purple">&#9888;</div><span class="text-yellow-400/80">30s Pose Loading Time</span></div>
+            <div class="feature-item"><div class="icon icon-purple">&#10003;</div>Apartment-Style Setup</div>
+            <div class="feature-item"><div class="icon icon-purple">&#10003;</div>Smooth &amp; Dynamic</div>
+          </div>
+          <div class="flex items-center gap-5 pt-2">
+            <div>
+              <span class="price-tag text-3xl text-white">₹1,500</span>
+              <span class="text-sm text-gray-600 ml-2">$20</span>
+            </div>
+            <button class="btn-premium btn-purple btn-small" onclick="notify('AIN Belt Room','Selected &mdash; Apartment Room')">
+              Select Room
+            </button>
+          </div>
+        </div>
+        <div class="order-1 md:order-2 card-premium rounded-2xl overflow-hidden">
+          <div class="card-shine"></div>
+          <div class="video-container" data-playing="false">
+            <video loop muted playsinline preload="metadata">
+              <source src="videos/ainbelt.mp4" type="video/mp4">
+            </video>
+            <div class="video-gradient"></div>
+            <div class="video-center-play">
+              <button class="video-center-play-btn" onclick="toggleVideo(this)">
+                <svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="video-progress-fill" style="width:0%"></div>
+            <div class="video-controls">
+              <div class="video-controls-top">
+                <button class="video-btn-control play-btn" onclick="toggleVideo(this)" title="Play/Pause">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <button class="video-btn-control" onclick="skipVideo(this, -10)" title="Back 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                  </svg>
+                </button>
+                <input type="range" class="video-scrubber" min="0" max="100" value="0" oninput="seekVideo(this)">
+                <button class="video-btn-control" onclick="skipVideo(this, 10)" title="Forward 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                  </svg>
+                </button>
+                <span class="video-time">0:00 / 0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 3: Modern Penthouse (No Video) -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16 items-center fade-left">
+        <div class="card-premium rounded-2xl overflow-hidden relative">
+          <div class="card-shine"></div>
+          <div class="aspect-video shimmer-box flex items-center justify-center" style="background:linear-gradient(145deg,#12121f,#0a0a14);">
+            <div class="text-center space-y-3">
+              <div class="text-4xl opacity-20 select-none">&#127969;</div>
+              <p class="text-sm text-gray-600 tracking-widest uppercase">Preview Unavailable</p>
+              <p class="text-xs text-gray-700">Coming soon</p>
+            </div>
+          </div>
+          <div class="absolute top-3 right-3 z-10">
+            <span class="badge badge-gold text-[0.55rem]">Featured</span>
+          </div>
+        </div>
+        <div class="space-y-5 fade-right stagger-1">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="badge badge-gold">Modern Penthouse</span>
+            <span class="text-[0.6rem] text-gray-600 tracking-widest uppercase">&#9733; Luxury</span>
+          </div>
+          <h3 class="font-orbitron text-2xl md:text-3xl font-bold">
+            <span class="text-glow-gold text-yellow-400">[123] Modern</span>
+            <span class="text-gray-200"> Penthouse</span>
+          </h3>
+          <p class="text-gray-400">Latest premium penthouse design with 10 unique poses. Red luxury theme, pool area.</p>
+          <div class="space-y-1.5">
+            <div class="feature-item"><div class="icon icon-gold">&#10003;</div>10 Unique Poses</div>
+            <div class="feature-item"><div class="icon icon-gold">&#10003;</div>Red Luxury Theme</div>
+            <div class="feature-item"><div class="icon icon-gold">&#10003;</div>Swimming Pool Area</div>
+          </div>
+          <div class="flex items-center gap-5 pt-2">
+            <div>
+              <span class="price-tag text-3xl text-white">₹1,500</span>
+              <span class="text-sm text-gray-600 ml-2">$20</span>
+            </div>
+            <button class="btn-premium btn-gold btn-small" onclick="notify('Modern Penthouse','Selected &mdash; Luxury Red Theme Penthouse')">
+              Select Room
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 4: Ervanzd (Last Room) -->
+      <div class="grid md:grid-cols-2 gap-8 items-center fade-right">
+        <div class="order-2 md:order-1 space-y-5 fade-left stagger-1">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="badge badge-pink">Ervanzd Room</span>
+            <span class="text-[0.6rem] text-gray-600 tracking-widest uppercase">&#9733; Relaxed</span>
+          </div>
+          <h3 class="font-orbitron text-2xl md:text-3xl font-bold">
+            <span class="text-glow-pink text-pink-400">Ervanzd</span>
+            <span class="text-gray-200"> Room</span>
+          </h3>
+          <p class="text-gray-400">Multiple quality poses. Cool design with a relaxed and stylish atmosphere.</p>
+          <div class="space-y-1.5">
+            <div class="feature-item"><div class="icon icon-pink">&#10003;</div>Multiple Quality Poses</div>
+            <div class="feature-item"><div class="icon icon-pink">&#10003;</div>Cool Room Design</div>
+            <div class="feature-item"><div class="icon icon-pink">&#10003;</div>Relaxed &amp; Stylish Atmosphere</div>
+          </div>
+          <div class="flex items-center gap-5 pt-2">
+            <div>
+              <span class="price-tag text-3xl text-white">₹1,500</span>
+              <span class="text-sm text-gray-600 ml-2">$20</span>
+            </div>
+            <button class="btn-premium btn-purple btn-small" onclick="notify('Ervanzd Room','Selected &mdash; Relaxed Stylish Room')">
+              Select Room
+            </button>
+          </div>
+        </div>
+        <div class="order-1 md:order-2 card-premium rounded-2xl overflow-hidden">
+          <div class="card-shine"></div>
+          <div class="video-container" data-playing="false">
+            <video loop muted playsinline preload="metadata">
+              <source src="videos/ervanzd.mp4" type="video/mp4">
+            </video>
+            <div class="video-gradient"></div>
+            <div class="video-center-play">
+              <button class="video-center-play-btn" onclick="toggleVideo(this)">
+                <svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="video-progress-fill" style="width:0%"></div>
+            <div class="video-controls">
+              <div class="video-controls-top">
+                <button class="video-btn-control play-btn" onclick="toggleVideo(this)" title="Play/Pause">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <button class="video-btn-control" onclick="skipVideo(this, -10)" title="Back 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                  </svg>
+                </button>
+                <input type="range" class="video-scrubber" min="0" max="100" value="0" oninput="seekVideo(this)">
+                <button class="video-btn-control" onclick="skipVideo(this, 10)" title="Forward 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                  </svg>
+                </button>
+                <span class="video-time">0:00 / 0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRODUCTS ========== -->
+  <section id="products" class="py-24 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/[0.03] to-transparent pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16">
+        <p class="section-label text-purple-400/70 mb-4 fade-up">Product Line</p>
+        <h2 class="section-title text-3xl md:text-5xl fade-up stagger-1">
+          <span class="text-glow-purple text-purple-400">Product</span> Packages
+        </h2>
+        <div class="divider-line max-w-xs mx-auto mt-6 fade-up stagger-2"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+        <div class="card-premium rounded-2xl p-8 text-center fade-scale stagger-1">
+          <div class="card-shine"></div>
+          <div class="text-5xl mb-4 select-none">&#128104;</div>
+          <h3 class="font-orbitron text-xl font-bold mb-2">Male Product</h3>
+          <p class="text-gray-400 text-sm mb-6">Premium male product package with full access</p>
+          <div class="flex items-center justify-center gap-4 mb-6">
+            <span class="price-tag text-3xl text-white">₹2,000</span>
+            <span class="text-sm text-gray-600">$26</span>
+          </div>
+          <button class="btn-premium btn-blue w-full justify-center" onclick="notify('Male Product','₹2,000 ($26) &mdash; Premium selected')">
+            Choose Product
+          </button>
+        </div>
+        <div class="card-premium rounded-2xl p-8 text-center fade-scale stagger-2">
+          <div class="card-shine"></div>
+          <div class="text-5xl mb-4 select-none">&#128105;</div>
+          <h3 class="font-orbitron text-xl font-bold mb-2">Female Product</h3>
+          <p class="text-gray-400 text-sm mb-6">Premium female product package with full access</p>
+          <div class="flex items-center justify-center gap-4 mb-6">
+            <span class="price-tag text-3xl text-white">₹2,000</span>
+            <span class="text-sm text-gray-600">$26</span>
+          </div>
+          <button class="btn-premium btn-purple w-full justify-center" onclick="notify('Female Product','₹2,000 ($26) &mdash; Premium selected')">
+            Choose Product
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRIVACY WARNING ========== -->
+  <section class="py-16 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="card-premium rounded-2xl p-6 md:p-8 text-center border-yellow-500/10 fade-scale">
+        <div class="card-shine"></div>
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-2xl">
+            &#9888;
+          </div>
+          <div>
+            <h3 class="font-orbitron text-base font-bold text-yellow-400/90 mb-2 tracking-wider">Privacy Notice</h3>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto leading-relaxed">
+              This content is for <span class="text-yellow-400/80 font-semibold">private use only</span>.
+              Do not stream, share, or display in public spaces.
+              Keep your room access confidential and enjoy responsibly.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-3 mt-1">
+            <span class="badge badge-gold text-[0.55rem]">&#9672; Private Use Only</span>
+            <span class="badge badge-gold text-[0.55rem]">&#9672; Do Not Share</span>
+            <span class="badge badge-gold text-[0.55rem]">&#9672; Keep Confidential</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COMBOS ========== -->
+  <section id="combos" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="section-label text-pink-400/70 mb-4 fade-up">Bundle &amp; Save</p>
+        <h2 class="section-title text-3xl md:text-5xl fade-up stagger-1">
+          <span class="text-glow-pink text-pink-400">Combo</span> Packages
+        </h2>
+        <div class="divider-line max-w-xs mx-auto mt-6 fade-up stagger-2"></div>
+      </div>
+
+      <!-- Room + Male -->
+      <div class="mb-12">
+        <h3 class="font-orbitron text-xs text-blue-400/70 mb-6 text-center tracking-[0.25em] uppercase fade-up">&#9655; Room + Male Product</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="combo-card fade-scale stagger-1">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#00d4ff,#0066ff);"></div>
+            <div class="text-2xl mb-2 select-none">💙</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">XTROMKL + Male</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-all" onclick="notify('XTROMKL + Male','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-2">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#7c3aed,#a855f7);"></div>
+            <div class="text-2xl mb-2 select-none">⚡</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">AIN Belt + Male</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 hover:bg-purple-500/20 transition-all" onclick="notify('AIN Belt + Male','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-3">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#f59e0b,#d97706);"></div>
+            <div class="text-2xl mb-2 select-none">🏙️</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">Penthouse + Male</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-all" onclick="notify('Penthouse + Male','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-4">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#ec4899,#db2777);"></div>
+            <div class="text-2xl mb-2 select-none">🏠</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">Ervanzd + Male</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-pink-500/10 text-pink-400 border border-pink-500/20 hover:bg-pink-500/20 transition-all" onclick="notify('Ervanzd + Male','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room + Female -->
+      <div class="mb-12">
+        <h3 class="font-orbitron text-xs text-purple-400/70 mb-6 text-center tracking-[0.25em] uppercase fade-up">&#9655; Room + Female Product</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="combo-card fade-scale stagger-1">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#00d4ff,#0066ff);"></div>
+            <div class="text-2xl mb-2 select-none">💙</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">XTROMKL + Female</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-all" onclick="notify('XTROMKL + Female','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-2">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#7c3aed,#a855f7);"></div>
+            <div class="text-2xl mb-2 select-none">⚡</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">AIN Belt + Female</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 hover:bg-purple-500/20 transition-all" onclick="notify('AIN Belt + Female','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-3">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#f59e0b,#d97706);"></div>
+            <div class="text-2xl mb-2 select-none">🏙️</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">Penthouse + Female</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-all" onclick="notify('Penthouse + Female','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+          <div class="combo-card fade-scale stagger-4">
+            <div class="combo-bar" style="background:linear-gradient(90deg,#ec4899,#db2777);"></div>
+            <div class="text-2xl mb-2 select-none">🏠</div>
+            <h4 class="font-orbitron text-sm font-bold text-white mb-1">Ervanzd + Female</h4>
+            <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹500 ($7)</span></p>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="block price-original text-xs">₹3,500</span>
+                <span class="price-tag text-lg text-white">₹3,000</span>
+                <span class="text-xs text-gray-600 ml-1">$39</span>
+              </div>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-pink-500/10 text-pink-400 border border-pink-500/20 hover:bg-pink-500/20 transition-all" onclick="notify('Ervanzd + Female','₹3,000 ($39) &mdash; Combo selected')">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Any Room + Both -->
+      <div class="max-w-lg mx-auto fade-scale">
+        <div class="combo-card text-center border-blue-500/10">
+          <div class="combo-bar" style="background:linear-gradient(90deg,#00d4ff,#7c3aed,#ec4899);"></div>
+          <div class="text-3xl mb-2 select-none">💎</div>
+          <h4 class="font-orbitron text-sm font-bold text-white mb-1">Any Room + Both Products</h4>
+          <p class="text-xs text-gray-600 mb-3">Save <span class="text-emerald-400 font-semibold">₹1,000 ($13)</span></p>
+          <div class="flex items-center justify-center gap-4 mb-4">
+            <div>
+              <span class="block price-original text-sm">₹5,500</span>
+              <span class="price-tag text-2xl text-white">₹4,500</span>
+              <span class="text-sm text-gray-600 ml-1">$58</span>
+            </div>
+          </div>
+          <button class="btn-premium btn-blue mx-auto btn-small" onclick="notify('Ultra Combo','Any Room + Male + Female &mdash; ₹4,500 ($58)')">
+            Select Combo
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ULTIMATE BUNDLE ========== -->
+  <section id="bundle" class="py-24 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-yellow-950/[0.03] via-transparent to-transparent pointer-events-none"></div>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-14">
+        <p class="section-label text-yellow-400/70 mb-4 fade-up">Best Value</p>
+        <h2 class="section-title text-3xl md:text-5xl fade-up stagger-1">
+          <span class="text-glow-gold text-yellow-400">Ultimate</span> Bundle
+        </h2>
+        <div class="divider-line max-w-xs mx-auto mt-6 fade-up stagger-2"></div>
+      </div>
+
+      <div class="bundle-card fade-scale">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10">
+          <div class="flex items-center gap-4">
+            <span class="crown-icon">👑</span>
+            <div>
+              <h3 class="font-orbitron text-xl md:text-2xl font-bold text-white">Complete Premium Collection</h3>
+              <p class="text-sm text-gray-500 mt-1">Everything in one ultimate package</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="flex items-center gap-3 justify-end">
+              <span class="price-original text-lg">₹10,000</span>
+              <span class="price-tag text-4xl md:text-5xl text-yellow-400">₹8,000</span>
+            </div>
+            <div class="flex items-center gap-3 justify-end mt-1">
+              <span class="text-sm text-gray-500">$104</span>
+              <span class="price-save">Save ₹2,000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-10">
+          <div>
+            <h4 class="font-orbitron text-[0.6rem] tracking-[0.25em] text-yellow-400/70 uppercase mb-5">&#9655; Included</h4>
+            <div class="space-y-2.5">
+              <div class="bundle-item"><span class="text-lg select-none">💙</span><span class="text-sm text-gray-300">XTROMKL Room <span class="text-gray-600">(with Sofa)</span></span></div>
+              <div class="bundle-item"><span class="text-lg select-none">⚡</span><span class="text-sm text-gray-300">AIN Belt Room</span></div>
+              <div class="bundle-item"><span class="text-lg select-none">🏙️</span><span class="text-sm text-gray-300">[123] Modern Penthouse</span></div>
+              <div class="bundle-item"><span class="text-lg select-none">🏠</span><span class="text-sm text-gray-300">Ervanzd Room</span></div>
+              <div class="bundle-item"><span class="text-lg select-none">👤</span><span class="text-sm text-gray-300">Male Product</span></div>
+              <div class="bundle-item"><span class="text-lg select-none">👤</span><span class="text-sm text-gray-300">Female Product</span></div>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-orbitron text-[0.6rem] tracking-[0.25em] text-yellow-400/70 uppercase mb-5">&#9655; Highlights</h4>
+            <div class="space-y-5">
+              <div class="flex items-start gap-3">
+                <span class="text-yellow-400/70 mt-0.5">✦</span>
+                <div>
+                  <p class="text-sm font-medium text-white">Best Value Package</p>
+                  <p class="text-xs text-gray-500 mt-0.5">Everything at a massive discount</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-yellow-400/70 mt-0.5">✦</span>
+                <div>
+                  <p class="text-sm font-medium text-white">Complete Premium Collection</p>
+                  <p class="text-xs text-gray-500 mt-0.5">All rooms and products in one bundle</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-yellow-400/70 mt-0.5">✦</span>
+                <div>
+                  <p class="text-sm font-medium text-white">Instant Access &amp; Support</p>
+                  <p class="text-xs text-gray-500 mt-0.5">Get started immediately with full support</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-5 justify-center pt-6 border-t border-white/[0.03]">
+          <button class="btn-premium btn-gold glow-gold" onclick="notify('Ultimate Bundle','₹8,000 ($104) &mdash; Bundle selected!')">
+            Get the Bundle
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </button>
+          <div class="flex items-center gap-5 text-[0.6rem] text-gray-600">
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> Instant Access</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> 24/7 Support</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="py-12 border-t border-white/[0.03]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-[0.5rem] font-bold text-white font-orbitron">BM</div>
+          <span class="font-orbitron font-bold text-xs tracking-widest text-gray-500">PREMIUM<span class="text-blue-400/60">.</span></span>
+        </div>
+        <p class="text-[0.65rem] text-gray-700">&copy; 2026 BM Premium Collection. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // ─── PARTICLES ───
+    const c = document.getElementById('particleCanvas');
+    const ctx = c.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Pt {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * c.width;
+        this.y = Math.random() * c.height;
+        this.s = Math.random() * 2 + 0.3;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.o = Math.random() * 0.4 + 0.05;
+        const colors = ['0,212,255', '124,58,237', '236,72,153', '245,158,11', '255,255,255'];
+        this.clr = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < -10 || this.x > c.width + 10 || this.y < -10 || this.y > c.height + 10) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.clr},${this.o})`;
+        ctx.fill();
+      }
+    }
+
+    const count = Math.min(60, Math.floor(window.innerWidth * 0.035));
+    for (let i = 0; i < count; i++) particles.push(new Pt());
+
+    function anim() {
+      ctx.clearRect(0, 0, c.width, c.height);
+      particles.forEach(p => { p.update();
+        p.draw(); });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 100) {
+            const o = (1 - d / 100) * 0.06;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255,255,255,${o})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(anim);
+    }
+    anim();
+
+    // ─── NAVBAR ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.pageYOffset > 80);
+    });
+
+    // ─── MOBILE MENU ───
+    const menuToggle = document.getElementById('menuToggle');
+    const closeMenuBtn = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenuFn() {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    window.closeMobileMenu = closeMenuFn;
+
+    menuToggle.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenuFn);
+    menuOverlay.addEventListener('click', closeMenuFn);
+
+    // ─── VIDEO ───
+    function toggleVideo(btn) {
+      const container = btn.closest('.video-container');
+      const video = container.querySelector('video');
+      const playBtn = container.querySelector('.video-center-play-btn');
+      const controlPlayBtn = container.querySelector('.video-btn-control.play-btn');
+      const updateBtn = (paused) => {
+        const html = paused
+          ? `<svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`
+          : `<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+        if (playBtn) playBtn.innerHTML = html;
+        if (controlPlayBtn) {
+          controlPlayBtn.innerHTML = paused
+            ? `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`
+            : `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+        }
+      };
+      if (video.paused) {
+        video.play();
+        container.dataset.playing = 'true';
+        updateBtn(false);
+      } else {
+        video.pause();
+        container.dataset.playing = 'false';
+        updateBtn(true);
+      }
+    }
+
+    function skipVideo(btn, seconds) {
+      const container = btn.closest('.video-container');
+      const video = container.querySelector('video');
+      const newTime = Math.max(0, Math.min(video.duration, video.currentTime + seconds));
+      video.currentTime = newTime;
+      updateVideoUI(container);
+    }
+
+    function seekVideo(input) {
+      const container = input.closest('.video-container');
+      const video = container.querySelector('video');
+      const pct = parseFloat(input.value);
+      const seekTime = (pct / 100) * video.duration;
+      video.currentTime = seekTime;
+      updateVideoUI(container);
+    }
+
+    function updateVideoUI(container) {
+      const video = container.querySelector('video');
+      const scrubber = container.querySelector('.video-scrubber');
+      const timeEl = container.querySelector('.video-time');
+      const fill = container.querySelector('.video-progress-fill');
+      if (!video || !scrubber) return;
+      const pct = video.duration ? (video.currentTime / video.duration) * 100 : 0;
+      scrubber.value = pct;
+      if (fill) fill.style.width = pct + '%';
+      if (timeEl) {
+        const fmt = (s) => {
+          const m = Math.floor(s / 60);
+          const sec = Math.floor(s % 60);
+          return m + ':' + (sec < 10 ? '0' : '') + sec;
+        };
+        timeEl.textContent = fmt(video.currentTime) + ' / ' + (video.duration ? fmt(video.duration) : '0:00');
+      }
+    }
+
+    document.querySelectorAll('.video-container video').forEach(v => {
+      v.addEventListener('timeupdate', () => updateVideoUI(v.closest('.video-container')));
+      v.addEventListener('loadedmetadata', () => updateVideoUI(v.closest('.video-container')));
+      v.addEventListener('play', () => {
+        const c = v.closest('.video-container');
+        c.dataset.playing = 'true';
+        const playBtn = c.querySelector('.video-center-play-btn');
+        const controlPlayBtn = c.querySelector('.video-btn-control.play-btn');
+        if (playBtn) playBtn.innerHTML = `<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+        if (controlPlayBtn) controlPlayBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+      });
+      v.addEventListener('pause', () => {
+        const c = v.closest('.video-container');
+        c.dataset.playing = 'false';
+        const playBtn = c.querySelector('.video-center-play-btn');
+        const controlPlayBtn = c.querySelector('.video-btn-control.play-btn');
+        if (playBtn) playBtn.innerHTML = `<svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+        if (controlPlayBtn) controlPlayBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+      });
+    });
+
+    // ─── SCROLL OBSERVER ───
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right, .fade-scale').forEach(el => obs.observe(el));
+
+    // ─── COUNTER ───
+    const cntObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.getAttribute('data-target'));
+          let cur = 0;
+          const inc = Math.ceil(target / 50);
+          const timer = setInterval(() => {
+            cur += inc;
+            if (cur >= target) { cur = target;
+              clearInterval(timer); }
+            entry.target.textContent = cur;
+          }, 30);
+          cntObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter-value[data-target]').forEach(el => cntObs.observe(el));
+
+    // ─── TOAST ───
+    function notify(title, message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" style="box-shadow:0 0 8px rgba(52,211,153,0.4);"></span>
+          <div>
+            <p class="text-sm font-medium text-white">${title}</p>
+            <p class="text-xs text-gray-500">${message}</p>
+          </div>
+        </div>
+      `;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('show'));
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+      }, 3000);
+    }
+
+    // ─── SMOOTH SCROLL ───
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    console.log('%c BM Premium Collection ',
+      'background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;font-size:14px;font-weight:bold;padding:6px 14px;border-radius:4px;');
+    console.log('%c Premium Dark Theme Showcase', 'color:#64748b;font-size:11px;');
+  </script>
+</body>
+</html>
