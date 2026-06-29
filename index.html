@@ -1369,32 +1369,106 @@
         <div class="divider-line max-w-xs mx-auto mt-6 fade-up stagger-2"></div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-        <div class="card-premium rounded-2xl p-8 text-center fade-scale stagger-1">
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div class="card-premium rounded-2xl overflow-hidden fade-scale stagger-1">
           <div class="card-shine"></div>
-          <div class="text-5xl mb-4 select-none">&#128104;</div>
-          <h3 class="font-orbitron text-xl font-bold mb-2">Male Product</h3>
-          <p class="text-gray-400 text-sm mb-6">Premium male product package with full access</p>
-          <div class="flex items-center justify-center gap-4 mb-6">
-            <span class="price-tag text-3xl text-white">₹2,000</span>
-            <span class="text-sm text-gray-600">$26</span>
+          <div class="video-container" data-playing="false">
+            <video loop muted playsinline preload="metadata">
+              <source src="videos/male.mp4" type="video/mp4">
+            </video>
+            <div class="video-gradient"></div>
+            <div class="video-center-play">
+              <button class="video-center-play-btn" onclick="toggleVideo(this)">
+                <svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="video-progress-fill" style="width:0%"></div>
+            <div class="video-controls">
+              <div class="video-controls-top">
+                <button class="video-btn-control play-btn" onclick="toggleVideo(this)" title="Play/Pause">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <button class="video-btn-control" onclick="skipVideo(this, -10)" title="Back 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                  </svg>
+                </button>
+                <input type="range" class="video-scrubber" min="0" max="100" value="0" oninput="seekVideo(this)">
+                <button class="video-btn-control" onclick="skipVideo(this, 10)" title="Forward 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                  </svg>
+                </button>
+                <span class="video-time">0:00 / 0:00</span>
+              </div>
+            </div>
           </div>
-          <button class="btn-premium btn-blue w-full justify-center" onclick="notify('Male Product','₹2,000 ($26) &mdash; Premium selected')">
-            Choose Product
-          </button>
+          <div class="p-8 text-center">
+            <div class="text-5xl mb-4 select-none">&#128104;</div>
+            <h3 class="font-orbitron text-xl font-bold mb-2">Male Product</h3>
+            <p class="text-gray-400 text-sm mb-6">Premium male product package with full access</p>
+            <div class="flex items-center justify-center gap-4 mb-6">
+              <span class="price-tag text-3xl text-white">₹2,000</span>
+              <span class="text-sm text-gray-600">$26</span>
+            </div>
+            <button class="btn-premium btn-blue w-full justify-center" onclick="notify('Male Product','₹2,000 ($26) &mdash; Premium selected')">
+              Choose Product
+            </button>
+          </div>
         </div>
-        <div class="card-premium rounded-2xl p-8 text-center fade-scale stagger-2">
+        <div class="card-premium rounded-2xl overflow-hidden fade-scale stagger-2">
           <div class="card-shine"></div>
-          <div class="text-5xl mb-4 select-none">&#128105;</div>
-          <h3 class="font-orbitron text-xl font-bold mb-2">Female Product</h3>
-          <p class="text-gray-400 text-sm mb-6">Premium female product package with full access</p>
-          <div class="flex items-center justify-center gap-4 mb-6">
-            <span class="price-tag text-3xl text-white">₹2,000</span>
-            <span class="text-sm text-gray-600">$26</span>
+          <div class="video-container" data-playing="false">
+            <video loop muted playsinline preload="metadata">
+              <source src="videos/Female.mp4" type="video/mp4">
+            </video>
+            <div class="video-gradient"></div>
+            <div class="video-center-play">
+              <button class="video-center-play-btn" onclick="toggleVideo(this)">
+                <svg class="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="video-progress-fill" style="width:0%"></div>
+            <div class="video-controls">
+              <div class="video-controls-top">
+                <button class="video-btn-control play-btn" onclick="toggleVideo(this)" title="Play/Pause">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <button class="video-btn-control" onclick="skipVideo(this, -10)" title="Back 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                  </svg>
+                </button>
+                <input type="range" class="video-scrubber" min="0" max="100" value="0" oninput="seekVideo(this)">
+                <button class="video-btn-control" onclick="skipVideo(this, 10)" title="Forward 10s">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                  </svg>
+                </button>
+                <span class="video-time">0:00 / 0:00</span>
+              </div>
+            </div>
           </div>
-          <button class="btn-premium btn-purple w-full justify-center" onclick="notify('Female Product','₹2,000 ($26) &mdash; Premium selected')">
-            Choose Product
-          </button>
+          <div class="p-8 text-center">
+            <div class="text-5xl mb-4 select-none">&#128105;</div>
+            <h3 class="font-orbitron text-xl font-bold mb-2">Female Product</h3>
+            <p class="text-gray-400 text-sm mb-6">Premium female product package with full access</p>
+            <div class="flex items-center justify-center gap-4 mb-6">
+              <span class="price-tag text-3xl text-white">₹2,000</span>
+              <span class="text-sm text-gray-600">$26</span>
+            </div>
+            <button class="btn-premium btn-purple w-full justify-center" onclick="notify('Female Product','₹2,000 ($26) &mdash; Premium selected')">
+              Choose Product
+            </button>
+          </div>
         </div>
       </div>
     </div>
